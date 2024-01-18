@@ -27,7 +27,7 @@ function App() {
             <Routes>
               <Route path='/login' element={<Login/>}/>
               <Route path='/employee' isVerified={isVerified} element={<Employee/>}/>
-              <Route path='/employeelogin' isVerified={isVerified} userInfo={userInfo} element={<EmployeeLogin/>}/>
+              <Route path='/' isVerified={isVerified} userInfo={userInfo} element={<EmployeeLogin/>}/>
               <Route path='/shoppinglist' isVerified={isVerified} element={<ShoppingList/>}/>
               <Route path='/home' isVerified={isVerified} userInfo={userInfo} element={<BasicEmployee/>}/>
             </Routes>
