@@ -135,7 +135,8 @@ function BasicEmployee() {
               name: "",
               photo_url: ""
             }])
-            navigate("/employeelogin")
+            setIsVerified(false)
+            navigate("/")
           }}>
               <FaArrowLeft className='text-2xl'/>
           </button>
