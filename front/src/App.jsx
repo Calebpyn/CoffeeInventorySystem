@@ -1,34 +1,41 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import {HashRouter, Routes, Route} from 'react-router-dom'
+import Login from './components/Login'
+import Employee from './components/Employee'
+import EmployeeLogin from './components/EmployeeLogin'
+import ShoppingList from './components/ShoppingList'
+import BasicEmployee from './components/BasicEmployee'
+import { createContext, useState } from 'react'
+
+export const UserContext = createContext()
+export const userInfoContext = createContext()
 
 function App() {
-  const [count, setCount] = useState(0)
+
+  //Change to default => false
+  const [isVerified, setIsVerified] = useState(false);
+  const [userInfo, setUserInfo] = useState([{
+    name: "",
+    photo_url: "",
+    org_id: ""
+  }])
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <userInfoContext.Provider value={[userInfo, setUserInfo]}>
+      <UserContext.Provider value={[isVerified, setIsVerified]}>
+        <HashRouter>
+          <div>
+            <Routes>
+              <Route path='/login' element={<Login/>}/>
+              <Route path='/employee' isVerified={isVerified} element={<Employee/>}/>
+              <Route path='/employeelogin' isVerified={isVerified} userInfo={userInfo} element={<EmployeeLogin/>}/>
+              <Route path='/shoppinglist' isVerified={isVerified} element={<ShoppingList/>}/>
+              <Route path='/home' isVerified={isVerified} userInfo={userInfo} element={<BasicEmployee/>}/>
+            </Routes>
+          </div>
+        </HashRouter>
+      </UserContext.Provider>
+    </userInfoContext.Provider>
+    
   )
 }
 
