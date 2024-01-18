@@ -80,7 +80,6 @@ function ShoppingList() {
         const dummy = {
             list: filterList
         }
-        console.log(filterList)
 
         try {
 

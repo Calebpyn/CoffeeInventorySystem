@@ -137,13 +137,13 @@ app.post("/savelist", async (req, res) => {
   
   const {list} = req.body
 
-  const query = "INSERT INTO shopping_list (created_at, needed, urgent, product_id) VALUES (now(), $1, $2, $3)"
+  const query = "INSERT INTO shopping_list (created_at, needed, urgent, product_id, org_id) VALUES (now(), $1, $2, $3, $4)"
 
   try {
 
     for (let i = 0;i < list.length; i++) {
       if (list[i].state == "RO"){
-        await db.query(query, ["true", "false", list[i].id], (error, results) => {
+        await db.query(query, ["true", "false", list[i].id, list[i].org_id], (error, results) => {
           if(error) {
             console.log(error)
           } else {
@@ -151,7 +151,7 @@ app.post("/savelist", async (req, res) => {
           }
         })
       } else if(list[i].state == "OS") {
-        await db.query(query, ["false", "true", list[i].id], (error, results) => {
+        await db.query(query, ["false", "true", list[i].id, list[i].org_id], (error, results) => {
           if(error) {
             console.log(error)
           } else {
