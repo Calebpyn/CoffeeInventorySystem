@@ -1,6 +1,7 @@
 import {useContext, useEffect, useState} from 'react'
 import { IoBackspaceOutline } from "react-icons/io5";
 import { useNavigate } from 'react-router-dom';
+import CircularProgress from '@mui/material/CircularProgress'
 
 import {UserContext, userInfoContext} from '../App'
 
@@ -13,6 +14,8 @@ function EmployeeLogin() {
     const navigate = useNavigate()
 
     const [code, setCode]= useState("")
+
+    const [isLoading, setIsLoading] = useState(false)
 
     //Is a valid user?
     const [verified, setVerified] = useState(false)
@@ -49,6 +52,8 @@ function EmployeeLogin() {
 
         try {
 
+            setIsLoading(true)
+
             const data = await fetch(`${currUrl}/code`, {
                 method: 'POST',
                 headers: {"Content-Type" : "application/json"},
@@ -58,16 +63,19 @@ function EmployeeLogin() {
             const dataRes = await data.json();
 
             if(dataRes.length > 0){
+                setIsLoading(false)
                 setUserInfo(dataRes)
             }
 
             setCode("")
 
             if (dataRes.length == 0){
+                setIsLoading(false)
                 setIsNotUser(true)
             }
 
         } catch(err) {
+            setIsLoading(false)
             setCode("")
             console.log(err)
         }
@@ -80,10 +88,14 @@ function EmployeeLogin() {
             isNotUser ? <div className='mb-2'>Usuario no registrado...</div> : null
         }
         <div className='w-full flex justify-center items-center'>
-            <div className={code.length >= 1 ? 'w-[10px] shadow-inner h-[10px] rounded-full bg-gray-400' : 'w-[10px] shadow-inner h-[10px] rounded-full bg-gray-100'}></div>
-            <div className={code.length >= 2 ? 'w-[10px] ml-3 shadow-inner h-[10px] rounded-full bg-gray-400' : 'w-[10px] shadow-inner h-[10px] ml-3 rounded-full bg-gray-100'}></div>
-            <div className={code.length >= 3 ? 'w-[10px] ml-3 shadow-inner h-[10px] rounded-full bg-gray-400' : 'w-[10px] shadow-inner h-[10px] ml-3 rounded-full bg-gray-100'}></div>
-            <div className={code.length >= 4 ? 'w-[10px] ml-3 shadow-inner h-[10px] rounded-full bg-gray-400' : 'w-[10px] shadow-inner h-[10px] ml-3 rounded-full bg-gray-100'}></div>
+            { isLoading ? <CircularProgress />:
+            <div className='flex'>
+                <div className={code.length >= 1 ? 'w-[10px] shadow-inner h-[10px] rounded-full bg-gray-400' : 'w-[10px] shadow-inner h-[10px] rounded-full bg-gray-100'}></div>
+                <div className={code.length >= 2 ? 'w-[10px] ml-3 shadow-inner h-[10px] rounded-full bg-gray-400' : 'w-[10px] shadow-inner h-[10px] ml-3 rounded-full bg-gray-100'}></div>
+                <div className={code.length >= 3 ? 'w-[10px] ml-3 shadow-inner h-[10px] rounded-full bg-gray-400' : 'w-[10px] shadow-inner h-[10px] ml-3 rounded-full bg-gray-100'}></div>
+                <div className={code.length >= 4 ? 'w-[10px] ml-3 shadow-inner h-[10px] rounded-full bg-gray-400' : 'w-[10px] shadow-inner h-[10px] ml-3 rounded-full bg-gray-100'}></div>
+            </div>
+            }
         </div>
         <div className='w-full mt-10 flex flex-col justify-center items-center'>
 
