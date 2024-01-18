@@ -17,7 +17,7 @@ function ShoppingList() {
     const [allProds, setAllProds] = useState([])
 
 
-    const currentUrl = "http://localhost:4000/"
+    const currentUrl = "https://cis-api-fx90.onrender.com/"
 
 
     const [reload, setReload] = useState([])

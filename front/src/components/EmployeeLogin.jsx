@@ -17,7 +17,7 @@ function EmployeeLogin() {
     //Is a valid user?
     const [verified, setVerified] = useState(false)
 
-    const currUrl = "http://localhost:4000"
+    const currUrl = "https://cis-api-fx90.onrender.com"
 
     useEffect(() => {
         if(code.length >= 4){

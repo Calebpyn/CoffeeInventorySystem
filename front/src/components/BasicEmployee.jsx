@@ -18,7 +18,7 @@ import { json, useNavigate } from 'react-router-dom';
 function BasicEmployee() {
 
 
-  const currUrl = "http://localhost:4000"
+  const currUrl = "https://cis-api-fx90.onrender.com"
 
   const navigate = useNavigate()
 
